@@ -13,7 +13,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -70,4 +74,63 @@ public class EmployeeControllerTest {
         employeeController.getEmployeeById(employeeId);
     }
 
+    @Test
+    public void testGetAllEmployees() {
+
+        // Create some dummy employee data
+        List<EmployeeDto> dummyEmployees = Arrays.asList(
+                new EmployeeDto(1L, "John", "Doe", "john@example.com"),
+                new EmployeeDto(2L, "Jane", "Doe", "jane@example.com")
+        );
+
+        // Set up the behavior of the mocked service method
+        when(employeeService.getAllEmployees()).thenReturn(dummyEmployees);
+
+        // Create an instance of the controller and inject the mocked service
+        EmployeeController controller = new EmployeeController(employeeService);
+
+        // Call the controller method
+        ResponseEntity<List<EmployeeDto>> responseEntity = controller.getAllEmployees();
+
+        // Verify that the service method was called
+        verify(employeeService, times(1)).getAllEmployees();
+
+        // Assert the response status
+        assertSame(HttpStatus.OK, responseEntity.getStatusCode());
+
+        // Assert the response body
+        assertEquals(dummyEmployees, responseEntity.getBody());
+    }
+    @Test
+    public void testUpdateEmployee() {
+        // Given
+        Long employeeId = 1L;
+        EmployeeDto updatedEmployeeDto = new EmployeeDto(1L, "John", "Doe", "john@example.com");
+        EmployeeDto expectedEmployeeDto = new EmployeeDto(1L, "John", "Doe", "john@example.com");
+
+        // Mock the service method
+        when(employeeService.updateEmployee(eq(employeeId), any(EmployeeDto.class)))
+                .thenReturn(expectedEmployeeDto);
+
+        // When
+        ResponseEntity<EmployeeDto> responseEntity = employeeController.updateEmployee(employeeId, updatedEmployeeDto);
+
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(expectedEmployeeDto, responseEntity.getBody());
+    }
+
+    @Test
+    public void testDeleteEmployee() {
+        // Given
+        Long employeeId = 1L;
+
+        // When
+        ResponseEntity<String> responseEntity = employeeController.deleteEmployee(employeeId);
+
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Employee deleted successful", responseEntity.getBody());
+        verify(employeeService).deleteEmployee(employeeId);
+    }
 }
