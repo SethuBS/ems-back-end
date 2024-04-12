@@ -21,7 +21,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
-
         String email = employeeDto.getEmail();
 
         // Check if the email exists in the repository
