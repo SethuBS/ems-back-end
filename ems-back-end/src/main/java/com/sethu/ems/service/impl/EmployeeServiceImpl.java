@@ -21,6 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
+
         String email = employeeDto.getEmail();
 
         // Check if the email exists in the repository
@@ -54,6 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDto> getAllEmployees() {
+
         List<Employee> employeeDtoList = employeeRepository.findAll();
         return employeeDtoList.stream().map(EmployeeMapper::mapToEmployeeDto)
                 .collect(Collectors.toList());

@@ -76,7 +76,6 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGetAllEmployees() {
-
         // Create some dummy employee data
         List<EmployeeDto> dummyEmployees = Arrays.asList(
                 new EmployeeDto(1L, "John", "Doe", "john@example.com"),
