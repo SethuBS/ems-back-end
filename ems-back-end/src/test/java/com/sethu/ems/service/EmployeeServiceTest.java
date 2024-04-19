@@ -1,11 +1,10 @@
-package com.sethu.ems;
+package com.sethu.ems.service;
 
 import com.sethu.ems.dto.EmployeeDto;
 import com.sethu.ems.entity.Employee;
 import com.sethu.ems.exception.ResourceAlreadyExistsException;
 import com.sethu.ems.mapper.EmployeeMapper;
 import com.sethu.ems.repository.EmployeeRepository;
-import com.sethu.ems.service.EmployeeService;
 import com.sethu.ems.service.impl.EmployeeServiceImpl;
 import org.junit.Before;
 import org.junit.Test;

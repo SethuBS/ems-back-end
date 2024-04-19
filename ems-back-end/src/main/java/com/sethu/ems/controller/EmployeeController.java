@@ -3,6 +3,7 @@ package com.sethu.ems.controller;
 import com.sethu.ems.dto.EmployeeDto;
 import com.sethu.ems.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/v1/employees")
+@Slf4j
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -23,7 +25,7 @@ public class EmployeeController {
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
-    // Build Get Employee By Id REST API
+    // Build Get Employee By id REST API
     @GetMapping("{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId){
         EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);

@@ -1,7 +1,6 @@
-package com.sethu.ems;
+package com.sethu.ems.controller;
 
 
-import com.sethu.ems.controller.EmployeeController;
 import com.sethu.ems.dto.EmployeeDto;
 import com.sethu.ems.exception.ResourceNotFundException;
 import com.sethu.ems.service.EmployeeService;
