@@ -32,19 +32,19 @@ public class EmployeeServiceTest {
         // Mock existing email
         String existingEmail = "existing@example.com";
         Employee existingEmployee = new Employee();
-        existingEmployee.setEmail(existingEmail);
+        existingEmployee.setEmailAddress(existingEmail);
 
         // Map employee to dto
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(existingEmployee);
-        employeeDto.setEmail(existingEmail);
+        employeeDto.setEmailAddress(existingEmail);
 
         // Mock repository behavior to return an existing employee
-        when(employeeRepository.findByEmail(existingEmail)).thenReturn(existingEmployee);
+        when(employeeRepository.findByEmailAddress(existingEmail)).thenReturn(existingEmployee);
 
         // Attempt to create employee with existing email should throw ResourceAlreadyExistsException
         employeeService.createEmployee(employeeDto);
 
         // Verify that findByEmail was called with the correct email
-        verify(employeeRepository, times(1)).findByEmail(existingEmail);
+        verify(employeeRepository, times(1)).findByEmailAddress(existingEmail);
     }
 }

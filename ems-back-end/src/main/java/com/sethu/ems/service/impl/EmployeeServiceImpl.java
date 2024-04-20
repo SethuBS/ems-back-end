@@ -22,10 +22,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
 
-        String email = employeeDto.getEmail();
+        String email = employeeDto.getEmailAddress();
 
         // Check if the email exists in the repository
-        Employee existingEmployee = employeeRepository.findByEmail(email);
+        Employee existingEmployee = employeeRepository.findByEmailAddress(email);
         if (existingEmployee != null) {
             throw new ResourceAlreadyExistsException("Employee with email: " + email + " already exists");
         }
@@ -44,6 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeById(Long employeeId) {
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+
         Employee employee = employeeOptional.orElseThrow(() -> {
             if(!employeeOptional.isPresent()) {
                 return new ResourceNotFundException("Employee with given id: " + employeeId + " does not exist");
@@ -56,9 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeDto> getAllEmployees() {
 
-        List<Employee> employeeDtoList = employeeRepository.findAll();
-        return employeeDtoList.stream().map(EmployeeMapper::mapToEmployeeDto)
+        return employeeRepository.findAll().stream()
+                .map(EmployeeMapper::mapToEmployeeDto)
                 .collect(Collectors.toList());
+
     }
 
     @Override
@@ -69,7 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setFirstName(updatedEmployee.getFirstName());
         employee.setLastName(updatedEmployee.getLastName());
-        employee.setEmail(updatedEmployee.getEmail());
+        employee.setEmailAddress(updatedEmployee.getEmailAddress());
         employeeRepository.save(employee);
 
         return EmployeeMapper.mapToEmployeeDto(employee);
