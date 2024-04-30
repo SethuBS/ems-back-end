@@ -7,13 +7,13 @@ import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 public class OpenAPIConfiguration {
 
     @Bean
-    public OpenAPI defineOpenApi(){
+    public OpenAPI defineOpenApi() {
 
         Server server = new Server();
         server.setUrl("http://localhost:8080");
@@ -28,7 +28,7 @@ public class OpenAPIConfiguration {
                 .version("1.0")
                 .description("This API exposes endpoints to manage employees.")
                 .contact(myContact);
-        return new OpenAPI().info(information).servers(Arrays.asList(server));
+        return new OpenAPI().info(information).servers(Collections.singletonList(server));
 
     }
 }
