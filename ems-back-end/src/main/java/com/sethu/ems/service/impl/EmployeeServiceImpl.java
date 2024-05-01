@@ -1,7 +1,6 @@
 package com.sethu.ems.service.impl;
 
 import com.sethu.ems.dto.EmployeeDto;
-import com.sethu.ems.entity.Employee;
 import com.sethu.ems.exception.ResourceAlreadyExistsException;
 import com.sethu.ems.exception.ResourceNotFundException;
 import com.sethu.ems.mapper.EmployeeMapper;
@@ -11,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,14 +42,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getEmployeeById(Long employeeId) {
 
-        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
-
-        var employee = employeeOptional.orElseThrow(() -> {
-            if (employeeOptional.isEmpty()) {
-                return new ResourceNotFundException("Employee with given id: " + employeeId + " does not exist");
-            }
-            return null;
-        });
+        var employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() ->new ResourceNotFundException("Employee with given id: " + employeeId + " does not exist"));
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
 
